@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Registration - Membership system cosplayer</title>
+  <title>Member Sign in - Membership system cosplayer</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -23,6 +23,10 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Firebase Authentication  -->
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
 </head>
 
@@ -47,11 +51,7 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Registration</h2>
-          <ol>
-            <li><a href="index.html">Entrance</a></li>
-            <li>Registration</li>
-          </ol>
+          <h2>Member Sign In</h2>
         </div>
 
       </div>
@@ -77,14 +77,14 @@
                 <div class="info-box">
                   <i class="bx bx-envelope"></i>
                   <h3>Email Us</h3>
-                  <p>contact@masharl.net</p>
+                  <p>info@masharl.net</p>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="info-box">
                   <i class="bx bx-phone-call"></i>
                   <h3>Call Us</h3>
-                  <p>315 3150 3150</p>
+                  <p>0315 333 3150</p>
                 </div>
               </div>
             </div>
@@ -94,10 +94,6 @@
           <div class="col-lg-6">
             <form action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="form-group">
-                <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname"/>
-                <div class="validate"></div>
-              </div>
-              <div class="form-group">
                 <input type="email" class="form-control" name="email" id="email" placeholder="Email"/>
                 <div class="validate"></div>
               </div>
@@ -106,10 +102,7 @@
                 <div class="validate"></div>
               </div>
               <div class="text-center">
-                <button type="button" id="button_text">Member Registration</button>
-              </div>
-              <div class="text-center" id="registration_success">
-                <button type="submit"><a class="submit_text" href="card.html">Go Ahead </a></button>
+                <button type="submit" id="button_text"><a class="submit_text" href="index2.html">Go to Heaven </a></button>
               </div>
                   
               </div>
@@ -172,36 +165,27 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // 先生からのご教授
+    // 先生教授のSignin
     $(function() {
       $("#button_text").on("click",function(){
-        const userName = $('#nickname').val();
         const userMail = $('#email').val();
         const userPass = $('#password').val();
         signUp(userMail,userPass);
       });
     });
 
-    //サインアップ処理
-    function signUp(email, password){
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        console.log(user);
-        console.log("success!");
-        // ...
-        alert("Member Registration Success!");
-        $('#registration_success').css('visibility','visible');
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ..
-        alert("Member Registration Error")
-      });
-    }
-    
+    //サインイン処理
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+
     </script>
 
 </body>
